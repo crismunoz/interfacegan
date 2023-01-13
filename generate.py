@@ -7,23 +7,30 @@ import argparse
 import os.path
 import io
 import PIL.Image
-from main_utils import build_generator,sample_codes
+from generate_utils import build_generator,sample_codes
 import torch
 
 parser = argparse.ArgumentParser()
 parser.add_argument('--output_path', type=str)
-parser.add_argument('--gender_value', type=float, default=0)
-parser.add_argument('--age_value', type=float, default=0)
+parser.add_argument('--att_value', type=float, default=0)
+parser.add_argument('--attribute', type=str, default=None)
 parser.add_argument('--latent_space_type', type=str, default='Z')
 parser.add_argument('--tag', type=float)
 args = parser.parse_args()
 
 num_samples = 1
-age = args.age_value
+age = 0
 eyeglasses = 0
-gender = args.gender_value
+gender = 0
 pose = 0
 smile = 0
+
+if args.attribute=='gender':
+  gender = args.att_value
+elif args.attribute=='age':
+  age = args.att_value
+else:
+  raise f"Unknown attribute: {args.attribute}"  
 
 #param ['pggan_celebahq','stylegan_celebahq', 'stylegan_ffhq']
 model_name = "stylegan_ffhq" 

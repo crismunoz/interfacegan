@@ -1,6 +1,5 @@
 import os.path
 import io
-import IPython.display
 import numpy as np
 import cv2
 import PIL.Image
